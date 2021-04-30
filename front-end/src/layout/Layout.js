@@ -1,8 +1,7 @@
-import React from "react";
-import Menu from "./Menu";
-import Routes from "./Routes";
+import React from 'react'
+import Routes from './Routes'
 
-import "./Layout.css";
+import './Layout.css'
 
 /**
  * Defines the main layout of the application.
@@ -13,17 +12,17 @@ import "./Layout.css";
  */
 function Layout() {
   return (
-    <div>
+    <div className='container-fluid'>
       <div>
-        <div>
-          <Menu />
-        </div>
-        <div className="app-wrapper">
-          <Routes />
+        <div className='m-0 p-0'>
+          <div className='backSplash'></div>
+          <div className='routes'>
+            <Routes />
+          </div>
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default Layout;
+export default Layout
