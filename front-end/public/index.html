@@ -10,6 +10,12 @@
       name="description"
     />
     <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+      crossorigin="anonymous"
+    />
+    <link
       href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,700&display=swap"
       rel="stylesheet"
     />
@@ -45,15 +51,16 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <!--
-  This HTML file is a template.
-  If you open it directly in the browser, you will see an empty page.
+    <script>
+      function openNav() {
+        document.getElementById('mySidenav').style.width = '250px'
+        document.getElementById('main').style.marginLeft = '250px'
+      }
 
-  You can add webfonts, meta tags, or analytics to this file.
-  The build step will place the bundled scripts into the <body> tag.
-
-  To begin the development, run `npm start` or `yarn start`.
-  To create a production bundle, use `npm run build` or `yarn build`.
--->
+      function closeNav() {
+        document.getElementById('mySidenav').style.width = '0'
+        document.getElementById('main').style.marginLeft = '0'
+      }
+    </script>
   </body>
 </html>
