@@ -1,76 +1,88 @@
-import React, { useEffect, useState } from "react";
-import { listReservations, listTables } from "../utils/api";
-import ErrorAlert from "../layout/ErrorAlert";
-import useQuery from "../utils/useQuery";
-import { today, next, previous } from "../utils/date-time";
-import DashboardList from "./DashboardList";
-import Seat from "./Seat";
-import NoReservation from "./NoReservation";
+import React, { useEffect, useState } from 'react'
+import DashButtons from './DashButtons'
+import ErrorAlert from '../layout/ErrorAlert'
+import { listReservations, listTables } from '../utils/api'
+import ReservationList from '../reservations/ReservationList'
+import TableList from '../tables/TableList'
 
-function Dashboard() {
-  let query = useQuery();
-  const [date, setDate] = useState(query.get("date") || today());
-  const [reservations, setReservations] = useState([]);
-  const [reservationsError, setReservationsError] = useState(null);
-  const [tables, setTables] = useState([]);
-  const [tablesError, setTablesError] = useState(null);
+/**
+ * Defines the dashboard page.
+ * @param date
+ *  the date for which the user wants to view reservations.
+ * @returns {JSX.Element}
+ */
+function Dashboard({ date, setDate }) {
+  const [reservations, setReservations] = useState([])
+  const [reservationsError, setReservationsError] = useState(null)
+  const [tables, setTables] = useState([])
+  const [tablesError, setTablesError] = useState(null)
 
-  useEffect(loadDashboard, [date]);
+  useEffect(loadDashboard, [date])
 
   function loadDashboard() {
-    const abortController = new AbortController();
-    setReservationsError(null);
+    const abortController = new AbortController()
+    setReservationsError(null)
+    setTablesError(null)
     listReservations({ date }, abortController.signal)
       .then(setReservations)
-      .catch(setReservationsError);
-    listTables().then(setTables).catch(setTablesError);
-    return () => abortController.abort();
+      .catch(setReservationsError)
+    listTables()
+      .then((tables) => {
+        return tables
+      })
+      .then(setTables)
+      .catch(setTablesError)
+    return () => abortController.abort()
   }
 
   return (
     <main>
-      <div className="text-center pt-4">
-        <button
-          className="btn btn-info mr-2 text-dark"
-          onClick={() => setDate(previous(date))}
-        >
-          Previous Day
-        </button>
-        <button
-          className="btn btn-info mr-2 text-dark"
-          onClick={() => setDate(today())}
-        >
-          Today
-        </button>
-        <button 
-          className="btn btn-info mr-2 text-dark"
-          onClick={() => setDate(today())}
-        >
-          Next Day
-        </button>
-      </div>
-      <div className="text-center m-3">
-        <h4 className="mb-0 text-light">Reservations for {date}</h4>
-      </div>
-      <ErrorAlert error={tablesError} />
-      <ErrorAlert error={reservationsError} />
-      <div className="ml-5 mr-5">
-        <div className="row mb-4 d-flex justify-content-center">
-          {tables.map((table) => (
-            <Seat key={table.table_id} table={table} />
-          ))}
-        </div>
-      </div>
-      {reservations.length === 0 && <NoReservation />}
-      <div className="mr-5 ml-5 pb-5">
-        <div className="row d-flex justify-content-center">
-          {reservations.map((reservation) => (
-            <DashboardList key={reservation.reservation_id} reservation={reservation} />
-          ))}
+      <h1 className='text-center pt-4'>Dashboard</h1>
+      <h3 className='text-white text-center pb-4 mb-0'>
+        Reservations for {date}
+      </h3>
+
+      <div className=' w-100'>
+        <DashButtons date={date} setDate={setDate} />
+        <ErrorAlert error={reservationsError} />
+        <ErrorAlert error={tablesError} />
+        <div className='container align-self-center'>
+          <div className='row justify-content-around'>
+            <div className='group col-lg-6 w-100'>
+              <h3 className='text-light'>Reservations:</h3>
+              <div className='group-item'>
+                {reservations.length === 0 && (
+                  <h5 className='text-white'>
+                    There are no reservations for {date}
+                  </h5>
+                )}
+
+                {reservations.map((reservation) => (
+                  <ReservationList
+                    key={reservation.reservation_id}
+                    reservation={reservation}
+                  />
+                ))}
+              </div>
+            </div>
+
+            <div className='group col-lg-5 w-100'>
+              <h3 className='text-white'>Tables:</h3>
+              <div className='group-item'>
+                {tables.map((table) => (
+                  <TableList
+                    key={table.table_id}
+                    table={table}
+                    loadDashboard={loadDashboard}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </main>
-  );
+  )
 }
 
-export default Dashboard;
+export default Dashboard
