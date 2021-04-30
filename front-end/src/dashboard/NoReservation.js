@@ -1,5 +1,5 @@
 import React from "react";
-import { Alert } from "react-bootsrap";
+import { Alert } from "react-bootstrap";
 
 function NoReservation() {
   const show = true;
