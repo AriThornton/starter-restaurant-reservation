@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import DashButtons from './DashButtons'
+import DashboardButtons from './DashboardButtons'
 import ErrorAlert from '../layout/ErrorAlert'
 import { listReservations, listTables } from '../utils/api'
 import ReservationList from '../reservations/ReservationList'
@@ -43,7 +43,7 @@ function Dashboard({ date, setDate }) {
       </h3>
 
       <div className=' w-100'>
-        <DashButtons date={date} setDate={setDate} />
+        <DashboardButtons date={date} setDate={setDate} />
         <ErrorAlert error={reservationsError} />
         <ErrorAlert error={tablesError} />
         <div className='container align-self-center'>
