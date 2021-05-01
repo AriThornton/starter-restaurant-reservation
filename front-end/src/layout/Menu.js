@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom'
 import * as FaIcons from 'react-icons/fa'
 import * as AiIcons from 'react-icons/ai'
 
-import logo from '../images/logo.png'
-
 /**
  * Defines the menu for this application.
  *
@@ -35,10 +33,11 @@ const Menu = () => {
             to='/'
           >
             <div className='mx-3'>
-              <div className='text-center my-3 mx-0'>
-                <img src={logo} alt='periodic tables logo' />
-              </div>{' '}
-              <span>Periodic Tables</span>
+              <span>
+                Periodic
+                <br />
+                Tables
+              </span>
             </div>
           </Link>
 
